@@ -70,22 +70,18 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_todas:
                     navigationIndex = R.id.navigation_todas;
-                    setTitle("Visualização geral");
                     listaCromosTodos(refreshView);
                     return true;
                 case R.id.navigation_tem:
                     navigationIndex = R.id.navigation_tem;
-                    setTitle("Deslize para ação");
                     listaCromosPossui(refreshView);
                     return true;
                 case R.id.navigation_falta:
                     navigationIndex = R.id.navigation_falta;
-                    setTitle("Deslize para ação");
                     listaCromosFalta(refreshView);
                     return true;
                 case R.id.navigation_repetidas:
                     navigationIndex = R.id.navigation_repetidas;
-                    setTitle("Deslize para ação");
                     listaCromosRepetidos(refreshView);
                     return true;
             }
@@ -395,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cromos = cromoDAO.listarTodas();
+        setTitle(R.string.app_name);
 
         cromoAdapter = new CromoAdapter(cromos);
 
@@ -415,6 +412,7 @@ public class MainActivity extends AppCompatActivity {
         cromos = cromoDAO.listarPossui();
 
         cromoAdapter = new CromoAdapter(cromos);
+        setTitle("Tenho " + cromos.size());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -433,6 +431,7 @@ public class MainActivity extends AppCompatActivity {
         cromos = cromoDAO.listarFalta();
 
         cromoAdapter = new CromoAdapter(cromos);
+        setTitle("Falta " + cromos.size());
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -451,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
         cromos = cromoDAO.listarRepetidas();
 
         cromoAdapter = new CromoAdapter(cromos);
+        setTitle(cromos.size() + " repetidas");
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
