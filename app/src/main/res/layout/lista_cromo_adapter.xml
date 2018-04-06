@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="2dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/imageFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_introducao_24dp" />
+
+        <TextView
+            android:id="@+id/numeroAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:width="0dp"
+            android:gravity="left"
+            android:padding="2dp"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/nomeAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:width="0dp"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="Nome"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/imagemAdapter"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_weight="0.7"
+            app:srcCompat="@drawable/ic_close_red_24dp" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:checked="false"
+            android:gravity="center"
+            android:lineSpacingExtra="0sp"
+            android:padding="0dp"
+            android:textSize="8sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

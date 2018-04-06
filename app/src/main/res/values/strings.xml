@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Cromos</string>
+    <string name="title_todas">Todas</string>
+    <string name="title_tem">Tenho</string>
+    <string name="title_falta">Falta</string>
+    <string name="title_repetidas">Repetidas</string>
+    <string name="menu_exportar">Exportar Lista</string>
+</resources>

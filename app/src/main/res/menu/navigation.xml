@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_todas"
+        android:icon="@drawable/ic_format_list_numbered_black_24dp"
+        android:title="@string/title_todas" />
+
+    <item
+        android:id="@+id/navigation_tem"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="@string/title_tem" />
+
+    <item
+        android:id="@+id/navigation_falta"
+        android:icon="@drawable/ic_close_black_24dp"
+        android:title="@string/title_falta" />
+
+    <item
+        android:id="@+id/navigation_repetidas"
+        android:icon="@drawable/ic_repeat_black_24dp"
+        android:title="@string/title_repetidas" />
+
+</menu>
