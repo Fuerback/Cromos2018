@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private int navigationIndex;
     private boolean refreshView;
     private CromoDAO cromoDAO;
+    private Toast toastObject;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -151,7 +152,6 @@ public class MainActivity extends AppCompatActivity {
                     if(navigationIndex == R.id.navigation_tem){
                         if(cromoSelecionado.isRepetida()){
                             RemoveCromoRepetido(cromoSelecionado);
-                            navigation.setSelectedItemId(R.id.navigation_tem);
                         }
                         else{
                             AdicionaCromoRepetido(cromoSelecionado);
@@ -257,7 +257,11 @@ public class MainActivity extends AppCompatActivity {
             }
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            Toast.makeText(getApplicationContext(), "Removido de repetidas: " + cromo.getNumero(), Toast.LENGTH_SHORT).show();
+            if(toastObject != null){
+                toastObject.cancel();
+            }
+            toastObject = Toast.makeText(getApplicationContext(), "Removido de repetidas: " + cromo.getNumero(), Toast.LENGTH_SHORT);
+            toastObject.show();
         }
     }
 
@@ -274,7 +278,11 @@ public class MainActivity extends AppCompatActivity {
             refreshView = false;
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            Toast.makeText(getApplicationContext(), "Já tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT).show();
+            if(toastObject != null){
+                toastObject.cancel();
+            }
+            toastObject = Toast.makeText(getApplicationContext(), "Já tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT);
+            toastObject.show();
         }
     }
 
@@ -289,7 +297,11 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_tem);
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            Toast.makeText(getApplicationContext(), "Item Repetido: " + cromo.getNumero(), Toast.LENGTH_SHORT).show();
+            if(toastObject != null){
+                toastObject.cancel();
+            }
+            toastObject = Toast.makeText(getApplicationContext(), "Item Repetido: " + cromo.getNumero(), Toast.LENGTH_SHORT);
+            toastObject.show();
         }
     }
 
@@ -304,7 +316,11 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_tem);
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            Toast.makeText(getApplicationContext(), "Não tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT).show();
+            if(toastObject != null){
+                toastObject.cancel();
+            }
+            toastObject = Toast.makeText(getApplicationContext(), "Não tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT);
+            toastObject.show();
         }
     }
 
@@ -369,7 +385,11 @@ public class MainActivity extends AppCompatActivity {
                 if(installed){
                     startActivity(sendIntent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "Você precisa ter o WhatsApp instalado para compartilhar.", Toast.LENGTH_LONG).show();
+                    if(toastObject != null){
+                        toastObject.cancel();
+                    }
+                    toastObject = Toast.makeText(getApplicationContext(), "Você precisa ter o WhatsApp instalado para compartilhar.", Toast.LENGTH_LONG);
+                    toastObject.show();
                 }
                 break;
         }
