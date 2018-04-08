@@ -5,4 +5,5 @@
     <string name="title_falta">Falta</string>
     <string name="title_repetidas">Repetidas</string>
     <string name="menu_exportar">Exportar Lista</string>
+    <string name="menu_copiar">Copiar lista</string>
 </resources>

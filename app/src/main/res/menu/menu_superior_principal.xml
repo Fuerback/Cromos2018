@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/itemCopiar"
+        android:title="@string/menu_copiar"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_content_copy_24dp"
+        ></item>
+
+    <item
         android:id="@+id/itemExportar"
         android:title="@string/menu_exportar"
         app:showAsAction="ifRoom"

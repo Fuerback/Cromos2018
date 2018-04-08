@@ -1,40 +1,26 @@
 package com.schulze.desenvolvimento.cromos.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.schulze.desenvolvimento.cromos.R;
@@ -329,12 +315,15 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         getMenuInflater().inflate(R.menu.menu_superior_principal , menu);
         MenuItem compartilha = menu.findItem(R.id.itemExportar);
+        MenuItem copiar = menu.findItem(R.id.itemCopiar);
 
         if(navigation.getSelectedItemId() == R.id.navigation_todas){
             compartilha.setVisible(false);
+            copiar.setVisible(false);
         }
         else{
             compartilha.setVisible(true);
+            copiar.setVisible(true);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -357,15 +346,18 @@ public class MainActivity extends AppCompatActivity {
         String texto = "";
 
         if(navigationIndex == R.id.navigation_repetidas){
-            texto = "Minhas figurinhas REPETIDAS: ";
+            texto = "REPETIDAS: ";
         } else if (navigationIndex == R.id.navigation_falta){
-            texto = "Figurinhas que NÃO tenho: ";
+            texto = "PRECISO: ";
         } else if (navigationIndex == R.id.navigation_tem){
-            texto = "Figurinhas que TENHO: ";
+            texto = "TENHO: ";
         }
 
         for(int i=0; i < cromos.size(); i++){
-            texto += " - " + cromos.get(i).getNumero();
+            texto += cromos.get(i).getNumero();
+            if(i + 1 != cromos.size()){
+                texto += ", ";
+            }
         }
 
         return texto;
@@ -391,6 +383,16 @@ public class MainActivity extends AppCompatActivity {
                     toastObject = Toast.makeText(getApplicationContext(), "Você precisa ter o WhatsApp instalado para compartilhar.", Toast.LENGTH_LONG);
                     toastObject.show();
                 }
+                break;
+            case R.id.itemCopiar :
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("", getTextoCromos());
+                clipboard.setPrimaryClip(clip);
+                if(toastObject != null){
+                    toastObject.cancel();
+                }
+                toastObject = Toast.makeText(getApplicationContext(), "Lista atual copiada!", Toast.LENGTH_LONG);
+                toastObject.show();
                 break;
         }
 
