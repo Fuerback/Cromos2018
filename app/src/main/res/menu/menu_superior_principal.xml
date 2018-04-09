@@ -3,16 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/itemPesquisar"
+        android:title="@string/menu_pesquisar"
+        app:showAsAction="ifRoom|collapseActionView"
+        android:icon="@drawable/ic_search_24dp"
+        app:actionViewClass="android.widget.SearchView"
+        ></item>
+
+    <item
         android:id="@+id/itemCopiar"
         android:title="@string/menu_copiar"
-        app:showAsAction="ifRoom"
+        app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_content_copy_24dp"
         ></item>
 
     <item
         android:id="@+id/itemExportar"
         android:title="@string/menu_exportar"
-        app:showAsAction="ifRoom"
+        app:showAsAction="ifRoom|collapseActionView"
         android:icon="@drawable/ic_whatsapp_logo"
         ></item>
 

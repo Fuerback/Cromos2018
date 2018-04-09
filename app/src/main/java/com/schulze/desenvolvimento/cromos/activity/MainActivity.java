@@ -21,6 +21,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.schulze.desenvolvimento.cromos.R;
@@ -314,8 +316,44 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.menu_superior_principal , menu);
+
         MenuItem compartilha = menu.findItem(R.id.itemExportar);
         MenuItem copiar = menu.findItem(R.id.itemCopiar);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText != null && !newText.isEmpty()){
+                    List<Cromo> listFound = new ArrayList<Cromo>();
+                    for (Cromo cromo:cromos){
+                        try{
+                            int numero = Integer.parseInt(newText);
+                            if(cromo.getNumero() == numero){
+                                listFound.add(cromo);
+                            }
+                        } catch (NumberFormatException e){
+                            if(cromo.getNome().toUpperCase().contains(newText.toUpperCase())){
+                                listFound.add(cromo);
+                            }
+                        }
+                    }
+
+                    cromoAdapter = new CromoAdapter(listFound);
+                    recyclerView.setAdapter(cromoAdapter);
+                }else{
+                    cromoAdapter = new CromoAdapter(cromos);
+                    recyclerView.setAdapter(cromoAdapter);
+                }
+
+                return true;
+            }
+        });
 
         if(navigation.getSelectedItemId() == R.id.navigation_todas){
             compartilha.setVisible(false);

@@ -4,6 +4,7 @@
     <string name="title_tem">Tenho</string>
     <string name="title_falta">Falta</string>
     <string name="title_repetidas">Repetidas</string>
-    <string name="menu_exportar">Exportar Lista</string>
+    <string name="menu_exportar">Exportar WhatsApp</string>
     <string name="menu_copiar">Copiar lista</string>
+    <string name="menu_pesquisar">Pesquisar</string>
 </resources>
