@@ -14,6 +14,7 @@ import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -319,8 +320,8 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem compartilha = menu.findItem(R.id.itemExportar);
         MenuItem copiar = menu.findItem(R.id.itemCopiar);
-        MenuItem sobre = menu.findItem(R.id.itemSobre);
-        final SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
+        MenuItem menuItemSobre = menu.findItem(R.id.itemSobre);
+        SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -359,12 +360,12 @@ public class MainActivity extends AppCompatActivity {
         if(navigation.getSelectedItemId() == R.id.navigation_todas){
             compartilha.setVisible(false);
             copiar.setVisible(false);
-            sobre.setVisible(true);
+            menuItemSobre.setVisible(true);
         }
         else{
             compartilha.setVisible(true);
             copiar.setVisible(true);
-            sobre.setVisible(false);
+            menuItemSobre.setVisible(false);
         }
 
         return super.onCreateOptionsMenu(menu);
