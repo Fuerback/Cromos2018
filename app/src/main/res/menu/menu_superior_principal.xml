@@ -17,6 +17,12 @@
         ></item>
 
     <item
+        android:id="@+id/itemTutorial"
+        android:title="@string/menu_tutorial"
+        app:showAsAction="collapseActionView"
+        ></item>
+
+    <item
         android:id="@+id/itemCopiar"
         android:title="@string/menu_copiar"
         app:showAsAction="ifRoom|collapseActionView"

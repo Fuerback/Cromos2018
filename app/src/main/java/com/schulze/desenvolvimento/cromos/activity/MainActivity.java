@@ -31,6 +31,7 @@ import com.schulze.desenvolvimento.cromos.adapter.CromoAdapter;
 import com.schulze.desenvolvimento.cromos.helper.CromoDAO;
 import com.schulze.desenvolvimento.cromos.helper.DataBase;
 import com.schulze.desenvolvimento.cromos.entity.Cromo;
+import com.schulze.desenvolvimento.cromos.helper.PrefManager;
 import com.schulze.desenvolvimento.cromos.helper.RecyclerItemClickListener;
 
 import java.util.ArrayList;
@@ -439,6 +440,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.itemSobre :
                 Intent sobreIntent = new Intent(getApplicationContext(), SobreActivity.class);
                 startActivity(sobreIntent);
+                break;
+            case R.id.itemTutorial :
+                PrefManager prefManager = new PrefManager(this);
+                prefManager.setFirstTimeLaunch(true);
+                startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
+                finish();
                 break;
         }
 
