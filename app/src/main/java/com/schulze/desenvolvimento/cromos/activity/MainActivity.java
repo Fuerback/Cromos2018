@@ -319,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
 
         MenuItem compartilha = menu.findItem(R.id.itemExportar);
         MenuItem copiar = menu.findItem(R.id.itemCopiar);
+        MenuItem sobre = menu.findItem(R.id.itemSobre);
         final SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -358,10 +359,12 @@ public class MainActivity extends AppCompatActivity {
         if(navigation.getSelectedItemId() == R.id.navigation_todas){
             compartilha.setVisible(false);
             copiar.setVisible(false);
+            sobre.setVisible(true);
         }
         else{
             compartilha.setVisible(true);
             copiar.setVisible(true);
+            sobre.setVisible(false);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -431,6 +434,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 toastObject = Toast.makeText(getApplicationContext(), "Lista atual copiada!", Toast.LENGTH_LONG);
                 toastObject.show();
+                break;
+            case R.id.itemSobre :
+                Intent sobreIntent = new Intent(getApplicationContext(), SobreActivity.class);
+                startActivity(sobreIntent);
                 break;
         }
 

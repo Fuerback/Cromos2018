@@ -7,4 +7,5 @@
     <string name="menu_exportar">Exportar WhatsApp</string>
     <string name="menu_copiar">Copiar lista</string>
     <string name="menu_pesquisar">Pesquisar</string>
+    <string name="menu_sobre">Sobre</string>
 </resources>
