@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CromoAdapter cromoAdapter;
     private List<Cromo> cromos = new ArrayList<>();
+    private List<Cromo> cromosSaveCopy = new ArrayList<>();
     private Cromo cromoSelecionado;
     private Vibrator vibe;
     private ItemTouchHelper itemTouchHelper;
@@ -334,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if(newText != null && !newText.isEmpty()){
                     List<Cromo> listFound = new ArrayList<Cromo>();
-                    for (Cromo cromo:cromos){
+                    for (Cromo cromo:cromosSaveCopy){
                         try{
                             int numero = Integer.parseInt(newText);
                             if(cromo.getNumero() == numero){
@@ -349,9 +350,11 @@ public class MainActivity extends AppCompatActivity {
 
                     cromoAdapter = new CromoAdapter(listFound);
                     recyclerView.setAdapter(cromoAdapter);
+                    cromos = listFound;
                 }else{
-                    cromoAdapter = new CromoAdapter(cromos);
+                    cromoAdapter = new CromoAdapter(cromosSaveCopy);
                     recyclerView.setAdapter(cromoAdapter);
+                    cromos = cromosSaveCopy;
                 }
 
                 return true;
@@ -466,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cromos = cromoDAO.listarTodas();
+        cromosSaveCopy = cromos;
         setTitle(R.string.app_name);
 
         cromoAdapter = new CromoAdapter(cromos);
@@ -485,6 +489,7 @@ public class MainActivity extends AppCompatActivity {
             cromoDAO = new CromoDAO(getApplicationContext());
         }
         cromos = cromoDAO.listarPossui();
+        cromosSaveCopy = cromos;
 
         cromoAdapter = new CromoAdapter(cromos);
         setTitle("Tenho " + cromos.size());
@@ -504,6 +509,7 @@ public class MainActivity extends AppCompatActivity {
             cromoDAO = new CromoDAO(getApplicationContext());
         }
         cromos = cromoDAO.listarFalta();
+        cromosSaveCopy = cromos;
 
         cromoAdapter = new CromoAdapter(cromos);
         setTitle("Falta " + cromos.size());
@@ -523,6 +529,7 @@ public class MainActivity extends AppCompatActivity {
             cromoDAO = new CromoDAO(getApplicationContext());
         }
         cromos = cromoDAO.listarRepetidas();
+        cromosSaveCopy = cromos;
 
         cromoAdapter = new CromoAdapter(cromos);
         setTitle(cromos.size() + " repetidas");
