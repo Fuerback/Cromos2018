@@ -320,9 +320,9 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         getMenuInflater().inflate(R.menu.menu_superior_principal , menu);
 
-        MenuItem compartilha = menu.findItem(R.id.itemExportar);
-        MenuItem copiar = menu.findItem(R.id.itemCopiar);
-        MenuItem menuItemSobre = menu.findItem(R.id.itemSobre);
+        final MenuItem compartilha = menu.findItem(R.id.itemExportar);
+        final MenuItem copiar = menu.findItem(R.id.itemCopiar);
+        final MenuItem menuItemSobre = menu.findItem(R.id.itemSobre);
         SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

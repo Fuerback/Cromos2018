@@ -5,8 +5,7 @@
     <item
         android:id="@+id/itemPesquisar"
         android:title="@string/menu_pesquisar"
-        app:showAsAction="ifRoom|collapseActionView"
-        android:icon="@drawable/ic_search_24dp"
+        app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView"
         ></item>
 
