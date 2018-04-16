@@ -1,6 +1,6 @@
-package com.schulze.desenvolvimento.cromos.helper;
+package com.fuerback.desenvolvimento.cromos.helper;
 
-import com.schulze.desenvolvimento.cromos.entity.Cromo;
+import com.fuerback.desenvolvimento.cromos.entity.Cromo;
 
 import java.util.List;
 

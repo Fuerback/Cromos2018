@@ -1,4 +1,4 @@
-package com.schulze.desenvolvimento.cromos.entity;
+package com.fuerback.desenvolvimento.cromos.entity;
 
 public class Cromo {
 

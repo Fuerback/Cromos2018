@@ -1,4 +1,4 @@
-package com.schulze.desenvolvimento.cromos;
+package com.fuerback.desenvolvimento.cromos;
 
 import org.junit.Test;
 

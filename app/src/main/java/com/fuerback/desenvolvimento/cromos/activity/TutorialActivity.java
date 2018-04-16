@@ -1,15 +1,13 @@
-package com.schulze.desenvolvimento.cromos.activity;
+package com.fuerback.desenvolvimento.cromos.activity;
 
 import android.content.Intent;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.heinrichreimersoftware.materialintro.app.IntroActivity;
 import com.heinrichreimersoftware.materialintro.slide.FragmentSlide;
-import com.schulze.desenvolvimento.cromos.R;
-import com.schulze.desenvolvimento.cromos.helper.PrefManager;
+import com.fuerback.desenvolvimento.cromos.R;
+import com.fuerback.desenvolvimento.cromos.helper.PrefManager;
 
 public class TutorialActivity extends IntroActivity {
 

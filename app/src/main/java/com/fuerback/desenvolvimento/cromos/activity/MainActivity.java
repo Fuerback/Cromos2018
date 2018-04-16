@@ -1,4 +1,4 @@
-package com.schulze.desenvolvimento.cromos.activity;
+package com.fuerback.desenvolvimento.cromos.activity;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -9,16 +9,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,17 +21,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.schulze.desenvolvimento.cromos.R;
-import com.schulze.desenvolvimento.cromos.adapter.CromoAdapter;
-import com.schulze.desenvolvimento.cromos.helper.CromoDAO;
-import com.schulze.desenvolvimento.cromos.helper.DataBase;
-import com.schulze.desenvolvimento.cromos.entity.Cromo;
-import com.schulze.desenvolvimento.cromos.helper.PrefManager;
-import com.schulze.desenvolvimento.cromos.helper.RecyclerItemClickListener;
+import com.fuerback.desenvolvimento.cromos.R;
+import com.fuerback.desenvolvimento.cromos.adapter.CromoAdapter;
+import com.fuerback.desenvolvimento.cromos.helper.CromoDAO;
+import com.fuerback.desenvolvimento.cromos.entity.Cromo;
+import com.fuerback.desenvolvimento.cromos.helper.PrefManager;
 
 import java.util.ArrayList;
 import java.util.List;

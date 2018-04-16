@@ -1,11 +1,11 @@
-package com.schulze.desenvolvimento.cromos.helper;
+package com.fuerback.desenvolvimento.cromos.helper;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.schulze.desenvolvimento.cromos.entity.Cromo;
+import com.fuerback.desenvolvimento.cromos.entity.Cromo;
 
 import java.util.ArrayList;
 import java.util.List;

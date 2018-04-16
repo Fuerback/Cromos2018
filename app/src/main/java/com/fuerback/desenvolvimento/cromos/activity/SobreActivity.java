@@ -1,9 +1,9 @@
-package com.schulze.desenvolvimento.cromos.activity;
+package com.fuerback.desenvolvimento.cromos.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.schulze.desenvolvimento.cromos.R;
+import com.fuerback.desenvolvimento.cromos.R;
 
 public class SobreActivity extends AppCompatActivity {
 

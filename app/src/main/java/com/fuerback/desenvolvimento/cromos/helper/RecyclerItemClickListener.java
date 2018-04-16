@@ -1,4 +1,4 @@
-package com.schulze.desenvolvimento.cromos.helper;
+package com.fuerback.desenvolvimento.cromos.helper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
