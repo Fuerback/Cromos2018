@@ -61,7 +61,7 @@ public class CromoAdapter  extends RecyclerView.Adapter<CromoAdapter.MyViewHolde
         }else if(cromo.getNumero() >= 192 && cromo.getNumero() <= 211){
             holder.flag.setImageResource(R.drawable.ic_franca);
         }else if(cromo.getNumero() >= 212 && cromo.getNumero() <= 231){
-            holder.flag.setImageResource(R.drawable.ic_australia);
+            holder.flag.setImageResource(R.drawable.ic_australia_new);
         }else if(cromo.getNumero() >= 232 && cromo.getNumero() <= 251){
             holder.flag.setImageResource(R.drawable.ic_peru);
         }else if(cromo.getNumero() >= 252 && cromo.getNumero() <= 271){

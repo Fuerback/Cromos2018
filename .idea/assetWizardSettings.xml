@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="ic_search_24dp" />
-                            <entry key="sourceFile" value="C:\Users\1749" />
+                            <entry key="outputName" value="ic_australia_new" />
+                            <entry key="sourceFile" value="C:\Users\1749\Pictures\Flag_of_Australia.svg" />
                           </map>
                         </option>
                       </PersistentState>
