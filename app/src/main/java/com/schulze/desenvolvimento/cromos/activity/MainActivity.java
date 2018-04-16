@@ -6,12 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -47,12 +51,12 @@ public class MainActivity extends AppCompatActivity {
     private Cromo cromoSelecionado;
     private Vibrator vibe;
     private ItemTouchHelper itemTouchHelper;
-    private Paint p = new Paint();
-    private int customRight;
     private int navigationIndex;
     private boolean refreshView;
     private CromoDAO cromoDAO;
     private Toast toastObject;
+    private static final float SWIPE_LEFT = 1;
+    private static final float SWIPE_RIGHT = 0;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
         refreshView = false;
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_falta);
     }
@@ -164,61 +168,26 @@ public class MainActivity extends AppCompatActivity {
                 cromoSelecionado = cromos.get(position);
 
                 if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
-
-                    View itemView = viewHolder.itemView;
-                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
-                    float width = height / 3;
-
                     if(navigationIndex == R.id.navigation_tem){
                         if(dX > 0){
                             if(!cromoSelecionado.isRepetida()) {
-                                Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_done_all_blue_24dp);
-                                if ((int) dX <= drawable.getIntrinsicWidth() + 40) {
-                                    customRight = (int) dX;
-                                }
-
-                                drawable.setBounds(itemView.getLeft(), itemView.getTop(), customRight, itemView.getBottom());
-                                drawable.draw(c);
+                                drawBackgroundSwipe(c, viewHolder, dX, "Repetida", Color.parseColor("#3399ff"), SWIPE_RIGHT);
                             } else{
-                                Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_done_green_24dp);
-                                if ((int) dX <= drawable.getIntrinsicWidth() + 40) {
-                                    customRight = (int) dX;
-                                }
-
-                                drawable.setBounds(itemView.getLeft(), itemView.getTop(), customRight, itemView.getBottom());
-                                drawable.draw(c);
+                                drawBackgroundSwipe(c, viewHolder, dX, "Tenho", Color.parseColor("#8bc34a"), SWIPE_RIGHT);
                             }
 
                         } else {
-                            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_close_red_24dp);
-                            if((int)dX * -1 <= drawable.getIntrinsicWidth() + 40){
-                                customRight = itemView.getRight() + (int)dX;
-                            }
-
-                            drawable.setBounds( customRight,  itemView.getTop(), itemView.getRight(), itemView.getBottom());
-                            drawable.draw(c);
+                            drawBackgroundSwipe(c, viewHolder, (dX * -1), "Falta", Color.parseColor("#cc0000"), SWIPE_LEFT);
                         }
                     }
                     else if(navigationIndex == R.id.navigation_falta){
                         if(dX > 0){
-                            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_done_green_24dp);
-                            if((int)dX <= drawable.getIntrinsicWidth() + 40){
-                                customRight = (int)dX;
-                            }
-
-                            drawable.setBounds(itemView.getLeft(), itemView.getTop(), customRight ,itemView.getBottom());
-                            drawable.draw(c);
+                            drawBackgroundSwipe(c, viewHolder, dX, "Tenho", Color.parseColor("#8bc34a"), SWIPE_RIGHT);
                         }
                     }
                     else if(navigationIndex == R.id.navigation_repetidas){
                         if(dX > 0){
-                            Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_done_green_24dp);
-                            if((int)dX <= drawable.getIntrinsicWidth() + 40){
-                                customRight = (int)dX;
-                            }
-
-                            drawable.setBounds(itemView.getLeft(), itemView.getTop(), customRight ,itemView.getBottom());
-                            drawable.draw(c);
+                            drawBackgroundSwipe(c, viewHolder, dX, "Tenho", Color.parseColor("#8bc34a"), SWIPE_RIGHT);
                         }
                     }
                 }
@@ -231,15 +200,43 @@ public class MainActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
+    private void drawBackgroundSwipe(Canvas c, RecyclerView.ViewHolder viewHolder, float customRight, String text, int color, float swipeDirection) {
+        float corners = 16;
+
+        View itemView = viewHolder.itemView;
+        Paint p = new Paint();
+        RectF leftBackground;
+
+        if(swipeDirection == SWIPE_RIGHT){
+            leftBackground = new RectF(itemView.getLeft(), itemView.getTop(),
+                    customRight, itemView.getBottom());
+        }
+        else {
+            leftBackground = new RectF(itemView.getRight() - customRight, itemView.getTop(),
+                    itemView.getRight(), itemView.getBottom());
+        }
+        p.setColor(color);
+        c.drawRoundRect(leftBackground, corners, corners, p);
+        drawText(text, c, leftBackground, p);
+    }
+
+    private void drawText(String text, Canvas c, RectF leftBackground, Paint p) {
+        float textSize = 60;
+        p.setColor(Color.WHITE);
+        p.setAntiAlias(true);
+        p.setTextSize(textSize);
+
+        float textWidth = p.measureText(text);
+        c.drawText(text, leftBackground.centerX()-(textWidth/2), leftBackground.centerY()+(textSize/2), p);
+    }
+
     private void RemoveCromoRepetido(Cromo cromo){
         CromoDAO cromoDAO = new CromoDAO(getApplicationContext());
-        int position = cromos.indexOf(cromo);
 
         Parcelable recyclerViewState;
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
 
         if( cromoDAO.atualizarRepetidas(cromo, 0)){
-            int scrollPosition = recyclerView.getVerticalScrollbarPosition();
             if(navigationIndex == R.id.navigation_tem){
                 navigation.setSelectedItemId(R.id.navigation_tem);
             }
@@ -258,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void RemoveCromoFaltante(Cromo cromo){
         CromoDAO cromoDAO = new CromoDAO(getApplicationContext());
-        int position = cromos.indexOf(cromo);
 
         Parcelable recyclerViewState;
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
@@ -279,7 +275,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void AdicionaCromoRepetido(Cromo cromo){
         CromoDAO cromoDAO = new CromoDAO(getApplicationContext());
-        int position = cromos.indexOf(cromo);
 
         Parcelable recyclerViewState;
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
@@ -298,7 +293,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void RemoveCromoPossuido(Cromo cromo){
         CromoDAO cromoDAO = new CromoDAO(getApplicationContext());
-        int position = cromos.indexOf(cromo);
 
         Parcelable recyclerViewState;
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
