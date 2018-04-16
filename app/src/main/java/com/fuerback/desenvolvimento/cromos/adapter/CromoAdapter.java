@@ -112,7 +112,7 @@ public class CromoAdapter  extends RecyclerView.Adapter<CromoAdapter.MyViewHolde
 
         if(cromo.isPossui()){
             if(cromo.isRepetida()){
-                holder.imagem.setImageResource(R.drawable.ic_done_all_blue_24dp);
+                holder.imagem.setImageResource(R.drawable.ic_repeat_blue_24dp);
             }
             else{
                 holder.imagem.setImageResource(R.drawable.ic_done_green_24dp);
