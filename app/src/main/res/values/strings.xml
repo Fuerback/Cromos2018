@@ -9,4 +9,5 @@
     <string name="menu_pesquisar">Pesquisar</string>
     <string name="menu_sobre">Sobre</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_importar">Importar</string>
 </resources>

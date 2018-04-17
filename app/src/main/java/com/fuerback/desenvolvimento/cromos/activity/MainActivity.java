@@ -3,6 +3,7 @@ package com.fuerback.desenvolvimento.cromos.activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Canvas;
@@ -14,13 +15,16 @@ import android.os.Parcelable;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -49,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private Toast toastObject;
     private static final float SWIPE_LEFT = 1;
     private static final float SWIPE_RIGHT = 0;
+    private static final float INPUT_REPETIDAS = 1;
+    private static final float INPUT_TENHO = 0;
+    private String possuiImportados = "";
+    private String repetidosImportados = "";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -237,11 +245,7 @@ public class MainActivity extends AppCompatActivity {
             }
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            if(toastObject != null){
-                toastObject.cancel();
-            }
-            toastObject = Toast.makeText(getApplicationContext(), "Removido de repetidas: " + cromo.getNumero(), Toast.LENGTH_SHORT);
-            toastObject.show();
+            ShowToast("Removido de repetidas: " + cromo.getNumero());
         }
     }
 
@@ -257,11 +261,7 @@ public class MainActivity extends AppCompatActivity {
             refreshView = false;
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            if(toastObject != null){
-                toastObject.cancel();
-            }
-            toastObject = Toast.makeText(getApplicationContext(), "Já tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT);
-            toastObject.show();
+            ShowToast("Já tenho: " + cromo.getNumero());
         }
     }
 
@@ -275,11 +275,7 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_tem);
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            if(toastObject != null){
-                toastObject.cancel();
-            }
-            toastObject = Toast.makeText(getApplicationContext(), "Item Repetido: " + cromo.getNumero(), Toast.LENGTH_SHORT);
-            toastObject.show();
+            ShowToast("Item Repetido: " + cromo.getNumero());
         }
     }
 
@@ -293,12 +289,16 @@ public class MainActivity extends AppCompatActivity {
             navigation.setSelectedItemId(R.id.navigation_tem);
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
             vibe.vibrate(50);
-            if(toastObject != null){
-                toastObject.cancel();
-            }
-            toastObject = Toast.makeText(getApplicationContext(), "Não tenho: " + cromo.getNumero(), Toast.LENGTH_SHORT);
-            toastObject.show();
+            ShowToast("Não tenho: " + cromo.getNumero());
         }
+    }
+
+    public void ShowToast(String message){
+        if(toastObject != null){
+            toastObject.cancel();
+        }
+        toastObject = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+        toastObject.show();
     }
 
     @Override
@@ -309,6 +309,7 @@ public class MainActivity extends AppCompatActivity {
         final MenuItem compartilha = menu.findItem(R.id.itemExportar);
         final MenuItem copiar = menu.findItem(R.id.itemCopiar);
         final MenuItem menuItemSobre = menu.findItem(R.id.itemSobre);
+        final MenuItem menuItemImportar = menu.findItem(R.id.itemImportar);
         SearchView searchView = (SearchView) menu.findItem(R.id.itemPesquisar).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -351,11 +352,13 @@ public class MainActivity extends AppCompatActivity {
             compartilha.setVisible(false);
             copiar.setVisible(false);
             menuItemSobre.setVisible(true);
+            menuItemImportar.setVisible(true);
         }
         else{
             compartilha.setVisible(true);
             copiar.setVisible(true);
             menuItemSobre.setVisible(false);
+            menuItemImportar.setVisible(false);
         }
 
         return super.onCreateOptionsMenu(menu);
@@ -409,22 +412,14 @@ public class MainActivity extends AppCompatActivity {
                 if(installed){
                     startActivity(sendIntent);
                 }else{
-                    if(toastObject != null){
-                        toastObject.cancel();
-                    }
-                    toastObject = Toast.makeText(getApplicationContext(), "Você precisa ter o WhatsApp instalado para compartilhar.", Toast.LENGTH_LONG);
-                    toastObject.show();
+                    ShowToast("Você precisa ter o WhatsApp instalado para compartilhar.");
                 }
                 break;
             case R.id.itemCopiar :
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("", getTextoCromos());
                 clipboard.setPrimaryClip(clip);
-                if(toastObject != null){
-                    toastObject.cancel();
-                }
-                toastObject = Toast.makeText(getApplicationContext(), "Lista atual copiada!", Toast.LENGTH_LONG);
-                toastObject.show();
+                ShowToast("Lista atual copiada!");
                 break;
             case R.id.itemSobre :
                 Intent sobreIntent = new Intent(getApplicationContext(), SobreActivity.class);
@@ -436,14 +431,91 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), TutorialActivity.class));
                 finish();
                 break;
+            case R.id.itemImportar :
+                ImportarPossui();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void ImportarPossui() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cromos que você já possui");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        input.setHint("Ex: 1, 12, 125");
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                possuiImportados = input.getText().toString();
+                ImportarCromosBanco(possuiImportados, INPUT_TENHO);
+                ImportarRepetidos();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void ImportarRepetidos() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cromos repetidos");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setHint("Ex: 1, 12, 125");
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                repetidosImportados = input.getText().toString();
+                ImportarCromosBanco(repetidosImportados, INPUT_REPETIDAS);
+                navigation.setSelectedItemId(R.id.navigation_tem);
+            }
+        });
+
+        builder.show();
+    }
+
+    private void ImportarCromosBanco(String listaImportada, float inputText) {
+        String message = "Lista importada.";
+        List<Cromo> cromosImportados = new ArrayList<>();
+        String[] importados;
+        if(listaImportada.contains(",")){
+            importados = listaImportada.split(",");
+        }
+        else{
+            importados = new String[1];
+            importados[0] = listaImportada;
+        }
+
+        for(int i=0; i<importados.length; i++){
+            try{
+                int numero = Integer.parseInt(importados[i].trim().toString());
+                Cromo cromo = cromosSaveCopy.get(numero);
+                if(inputText == INPUT_TENHO){
+                    cromoDAO.atualizarPossui(cromo, 1);
+                }
+                else {
+                    cromoDAO.atualizarRepetidas(cromo, 1);
+                }
+            } catch (Exception e){
+                message = "Você importou valores inválidos.";
+                break;
+            }
+        }
+
+        ShowToast(message);
     }
 
     public void listaCromosTodos(boolean refreshView){
